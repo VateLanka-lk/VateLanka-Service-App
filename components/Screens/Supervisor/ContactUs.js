@@ -13,19 +13,20 @@ import {
 import { COLORS } from "../../utils/Constants";
 import CustomText from "../../utils/CustomText";
 
-const ContactUS = () => {
+const ContactUS = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [comment, setComment] = useState("");
+  const [ContactNo, setContactNo] = useState("");
 
   const handleSubmit = () => {
-    if (!name || !email || !comment) {
+    if (!name || !email || !comment || !ContactNo) {
       Alert.alert("Error", "Please fill all fields.");
       return;
     }
     const subject = encodeURIComponent("Contact Us Form Submission");
     const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nComment: ${comment}`
+      `Name: ${name}\nEmail: ${email}\nContact No: ${ContactNo}\n Comment: ${comment}`
     );
     const mailtoUrl = `mailto:vatelanka@gmail.com?subject=${subject}&body=${body}`;
     Linking.openURL(mailtoUrl)
@@ -33,6 +34,7 @@ const ContactUS = () => {
         setName("");
         setEmail("");
         setComment("");
+        setContactNo("");
       })
       .catch(() => {
         Alert.alert("Error", "Could not open the mail app.");
@@ -64,6 +66,14 @@ const ContactUS = () => {
               onChangeText={setEmail}
               keyboardType="email-address"
               autoCapitalize="none"
+              placeholderTextColor={COLORS.textGray}
+            />
+            <CustomText style={styles.label}>Contact No</CustomText>
+            <TextInput
+              style={styles.input}
+              placeholder="0123456780"
+              value={ContactNo}
+              onChangeText={setContactNo}
               placeholderTextColor={COLORS.textGray}
             />
             <CustomText style={styles.label}>Comment</CustomText>
